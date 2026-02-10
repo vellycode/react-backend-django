@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+from customers.models import Customer
+from customers.serializers import CustomerSerializer
 
-# Create your views here.
+def customers(request):
+    data = Customer.objects.all()
+    serializer = CustomerSerializer(data, many=True)
+    return JsonResponse({'customers': serializer.data})
